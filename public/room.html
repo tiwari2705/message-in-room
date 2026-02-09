@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Room · Classroom Chat</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="theme-light">
+    <div class="page room-page">
+      <header class="room-header">
+        <div class="room-header-left">
+          <button class="btn ghost small" id="leave-room-btn">&larr; Home</button>
+          <div>
+            <h2 id="room-title">Room</h2>
+            <p id="room-subtitle" class="subtitle small"></p>
+          </div>
+        </div>
+        <div class="room-header-right">
+          <div class="pill" id="room-code-pill"></div>
+          <div class="pill" id="room-timer-pill">Room ends in --:--</div>
+          <label class="toggle small">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Dark</span>
+          </label>
+        </div>
+      </header>
+
+      <main class="room-main">
+        <section class="chat-panel card">
+          <header class="chat-header">
+            <div class="chat-tabs">
+              <button class="tab active" data-tab="public" id="tab-public">
+                Room Chat
+              </button>
+              <button class="tab" data-tab="private" id="tab-private">
+                Private
+                <span class="badge" id="private-unread-badge" hidden>0</span>
+              </button>
+            </div>
+            <div class="chat-status">
+              <span id="typing-indicator"></span>
+            </div>
+          </header>
+
+          <div class="chat-body">
+            <div class="chat-messages" id="public-messages"></div>
+            <div class="chat-messages hidden" id="private-messages"></div>
+          </div>
+
+          <footer class="chat-footer">
+            <div class="toolbar-row">
+              <label class="toggle small">
+                <input type="checkbox" id="anonymous-toggle" />
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Anonymous</span>
+              </label>
+            </div>
+            <div class="input-row">
+              <textarea
+                id="message-input"
+                rows="1"
+                placeholder="Type a message... Use @name to mention someone"
+              ></textarea>
+              <button class="btn primary" id="send-btn">Send</button>
+            </div>
+            <div class="meta-row">
+              <span id="send-status"></span>
+            </div>
+          </footer>
+        </section>
+
+        <aside class="side-panel">
+          <section class="card members-card">
+            <header class="section-header">
+              <h3>Members</h3>
+              <span id="member-count" class="pill small">0</span>
+            </header>
+            <ul class="member-list" id="member-list"></ul>
+          </section>
+
+          <section class="card admin-card" id="admin-panel" hidden>
+            <header class="section-header">
+              <h3>Admin controls</h3>
+              <span class="pill small">Admin</span>
+            </header>
+            <div class="admin-actions">
+              <button class="btn small" data-admin="extend_duration" data-duration="15" id="extend-room-btn">
+                Extend +15 min
+              </button>
+              <button class="btn small" data-admin="lock" id="lock-btn">
+                Lock room
+              </button>
+              <button class="btn small" data-admin="unlock" id="unlock-btn">
+                Unlock room
+              </button>
+              <button class="btn small" data-admin="enable_private" id="enable-private-btn">
+                Enable private chat
+              </button>
+              <button class="btn small" data-admin="disable_private" id="disable-private-btn">
+                Disable private chat
+              </button>
+              <button class="btn danger small" data-admin="delete_room" id="delete-room-btn">
+                Delete room
+              </button>
+            </div>
+          </section>
+
+          <section class="card polls-card">
+            <header class="section-header">
+              <h3>Polls</h3>
+            </header>
+            <div class="polls-list" id="polls-list"></div>
+            <button class="btn ghost small" id="new-poll-toggle">
+              New poll
+            </button>
+            <form id="poll-form" class="poll-form hidden">
+              <input
+                type="text"
+                id="poll-question"
+                placeholder="Poll question"
+                maxlength="200"
+              />
+              <input
+                type="text"
+                class="poll-option"
+                placeholder="Option 1"
+                maxlength="80"
+              />
+              <input
+                type="text"
+                class="poll-option"
+                placeholder="Option 2"
+                maxlength="80"
+              />
+              <button type="button" class="btn ghost small" id="add-option-btn">
+                Add option
+              </button>
+              <button type="submit" class="btn primary small">
+                Create poll
+              </button>
+            </form>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/room.js"></script>
+  </body>
+</html>
+
